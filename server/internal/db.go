@@ -27,7 +27,7 @@ func InitializeDatabase(dbPath string) (*sql.DB, error) {
 	return db, nil
 }
 
-func InsertExchangeRate(ctx context.Context, db *sql.DB, rate string, createDate string) error {
+func InsertExchangeRate(ctx context.Context, db *sql.DB, rate ExchangeRate) error {
 	query := "INSERT INTO exchange_rates (rate, create_date) VALUES (?, ?)"
 	stmt, err := db.Prepare(query)
 	if err != nil {
@@ -39,7 +39,7 @@ func InsertExchangeRate(ctx context.Context, db *sql.DB, rate string, createDate
 	case <-ctx.Done():
 		return ctx.Err()
 	default:
-		_, err := stmt.Exec(rate, createDate)
+		_, err := stmt.Exec(rate.Bid, rate.CreateDate)
 		return err
 	}
 }
