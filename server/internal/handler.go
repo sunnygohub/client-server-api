@@ -49,12 +49,13 @@ func CotacaoHandler(w http.ResponseWriter, r *http.Request, dbConn *sql.DB) {
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error fetching exchange rate: %v", err), http.StatusInternalServerError)
 		log.Println("Fetch Error: ", err)
+		return
 	}
 
 	dbCtx, dbCancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
 	defer dbCancel()
 
-	err = InsertExchangeRate(dbCtx, dbConn, rate.Bid, rate.CreateDate)
+	err = InsertExchangeRate(dbCtx, dbConn, rate)
 	if err != nil {
 		log.Println("DB Error: ", err)
 	}
