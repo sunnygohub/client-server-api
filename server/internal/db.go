@@ -13,11 +13,13 @@ func InitializeDatabase(dbPath string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	createTableQuery := `CREATE TABLE IF NOT EXISTS exchange_rates (
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
-		rate TEXT,
-		create_date DATETIME
-	)`
+	createTableQuery := `
+		CREATE TABLE IF NOT EXISTS exchange_rates (
+			id INTEGER PRIMARY KEY AUTOINCREMENT,
+			rate TEXT,
+			create_date DATETIME
+		)
+	`
 
 	_, err = db.Exec(createTableQuery)
 	if err != nil {

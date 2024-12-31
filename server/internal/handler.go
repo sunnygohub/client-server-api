@@ -11,8 +11,8 @@ import (
 )
 
 type ExchangeRate struct {
-	Bid        string `json:"bid"`
-	CreateDate string `json:"create_date"`
+	Bid        string    `json:"bid"`
+	CreateDate time.Time `json:"create_date"`
 }
 
 func getExchangeRate(ctx context.Context) (ExchangeRate, error) {
