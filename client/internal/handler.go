@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 )
@@ -25,7 +26,8 @@ func FetchExchangeRate(ctx context.Context) (string, error) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusInternalServerError {
-		return "", fmt.Errorf("internal server error")
+		body, _ := io.ReadAll(resp.Body)
+		return "", fmt.Errorf("error: %s", string(body))
 	}
 
 	var response Response
